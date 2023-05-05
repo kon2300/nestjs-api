@@ -1,5 +1,11 @@
-export class LoginResponse {
-  accessToken: string;
+import { BaseResponse } from '@/adaptor/primary/api/base.response';
 
-  user: any;
+export class LoginResponse extends BaseResponse {
+  data: {
+    accessToken: string;
+
+    user: {
+      username: string;
+    };
+  };
 }

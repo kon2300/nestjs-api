@@ -4,6 +4,8 @@ import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
+import { LoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
+import { RESPONSE_STATUS_DESCRIPTION } from '@/common/constants/response.status.description';
 
 describe('【e2eテスト】/auth/login', () => {
   let app: INestApplication;
@@ -23,18 +25,30 @@ describe('【e2eテスト】/auth/login', () => {
     await app.init();
   });
 
-  const requestBody: LoginRequest = {
+  const loginRequest: LoginRequest = {
     username: 'john',
     password: 'changeme',
   };
 
+  const loginResponse: LoginResponse = {
+    timeStamp: expect.anything(),
+    statusCode: HttpStatus.OK,
+    message: RESPONSE_STATUS_DESCRIPTION.OK,
+    data: {
+      accessToken: expect.anything(),
+      user: {
+        username: 'john',
+      },
+    },
+  };
+
   describe('正常系', () => {
     it('登録されたユーザがログインできること', async () => {
-      request(app.getHttpServer())
+      const res = await request(app.getHttpServer())
         .post('/auth/login')
-        .send(requestBody)
-        .expect(HttpStatus.OK);
-      return;
+        .send(loginRequest);
+
+      expect(res.body).toEqual(loginResponse);
     });
   });
 });
