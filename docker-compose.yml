@@ -3,10 +3,9 @@ services:
   api:
     build:
       context: .
-      dockerfile: .docker/Dockerfile
+      dockerfile: .docker/Dockerfile.dev
     ports:
       - '${API_PORT:-80}:80'
-      - '7447:7447'
     volumes:
       - .:/api
       - hidden-data:/api/node_modules
@@ -14,8 +13,6 @@ services:
       - .env.dev
     depends_on:
       - db
-    networks:
-      - api-network
     tty: true
 
   db:
@@ -31,6 +28,3 @@ services:
 volumes:
   db-data:
   hidden-data:
-
-networks:
-  api-network:

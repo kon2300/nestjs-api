@@ -1,0 +1,17 @@
+# prisma使用時、"Segmentation fault"が発生するため、あえてnode:16にしている
+FROM node:16-slim
+
+RUN apt-get update \
+    && apt-get install -y openssl
+
+WORKDIR /api
+
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn install --frozen-lockfile
+
+RUN yarn global add @nestjs/cli
+
+COPY prisma/schema.prisma /api/prisma/schema.prisma
+RUN yarn prisma:generate
