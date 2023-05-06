@@ -3,9 +3,9 @@ import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { ConfigModule } from '@nestjs/config';
-import { LoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
-import { LoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
-import { RESPONSE_STATUS_DESCRIPTION } from '@/common/constants/response.status.description';
+import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
+import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
+import { createTestResponse } from '@test/api/create.test.response';
 
 describe('【e2eテスト】/auth/login', () => {
   let app: INestApplication;
@@ -25,30 +25,28 @@ describe('【e2eテスト】/auth/login', () => {
     await app.init();
   });
 
-  const loginRequest: LoginRequest = {
+  const authLoginRequest: AuthLoginRequest = {
     username: 'john',
     password: 'changeme',
   };
 
-  const loginResponse: LoginResponse = {
-    timeStamp: expect.anything(),
-    statusCode: HttpStatus.OK,
-    message: RESPONSE_STATUS_DESCRIPTION.OK,
-    data: {
+  const authLoginResponse: AuthLoginResponse = createTestResponse(
+    HttpStatus.OK,
+    {
       accessToken: expect.anything(),
       user: {
         username: 'john',
       },
     },
-  };
+  );
 
   describe('正常系', () => {
     it('登録されたユーザがログインできること', async () => {
       const res = await request(app.getHttpServer())
         .post('/auth/login')
-        .send(loginRequest);
+        .send(authLoginRequest);
 
-      expect(res.body).toEqual(loginResponse);
+      expect(res.body).toEqual(authLoginResponse);
     });
   });
 });

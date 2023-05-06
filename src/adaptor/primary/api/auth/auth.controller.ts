@@ -1,22 +1,22 @@
 import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import {
-  LOGIN_USE_CASE_PROVIDER,
-  ILoginUseCase,
+  AUTH_LOGIN_USE_CASE_PROVIDER,
+  IAuthLoginUseCase,
 } from '@/usecase/api/auth/login/login.usecase';
-import { LoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
+import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
 import { createResponse } from '@/adaptor/primary/api/create.response';
-import { LoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
+import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    @Inject(LOGIN_USE_CASE_PROVIDER)
-    private readonly loginUseCase: ILoginUseCase,
+    @Inject(AUTH_LOGIN_USE_CASE_PROVIDER)
+    private readonly authLoginUseCase: IAuthLoginUseCase,
   ) {}
 
   @Post('login')
-  async login(@Body() req: LoginRequest): Promise<LoginResponse> {
-    const res = await this.loginUseCase.run(req);
+  async login(@Body() req: AuthLoginRequest): Promise<AuthLoginResponse> {
+    const res = await this.authLoginUseCase.run(req);
 
     return createResponse(HttpStatus.OK, res);
   }

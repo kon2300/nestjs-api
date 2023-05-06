@@ -6,8 +6,8 @@ import {
   Provider,
 } from '@nestjs/common';
 import {
-  LOGIN_USE_CASE_PROVIDER,
-  ILoginUseCase,
+  AUTH_LOGIN_USE_CASE_PROVIDER,
+  IAuthLoginUseCase,
 } from '@/usecase/api/auth/login/login.usecase';
 import {
   AUTH_SERVICE_PROVIDER,
@@ -18,19 +18,19 @@ import {
   USER_QUERY_SERVICE_PROVIDER,
 } from '@/usecase/queries/user.query.service.interface';
 import {
-  LoginInputDto,
-  LoginOutputDto,
+  AuthLoginInputDto,
+  AuthLoginOutputDto,
 } from '@/usecase/api/auth/login/login.dto';
 
 @Injectable()
-class LoginInteractor implements ILoginUseCase {
+class AuthLoginInteractor implements IAuthLoginUseCase {
   constructor(
     @Inject(AUTH_SERVICE_PROVIDER) private readonly authService: IAuthService,
     @Inject(USER_QUERY_SERVICE_PROVIDER)
     private readonly userQueryService: IUserQueryService,
   ) {}
 
-  async run(input: LoginInputDto): Promise<LoginOutputDto> {
+  async run(input: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
     const user = await this.userQueryService.findOne(input.username);
 
     if (!user)
@@ -43,7 +43,7 @@ class LoginInteractor implements ILoginUseCase {
   }
 }
 
-export const LoginUseCaseProvider: Provider = {
-  provide: LOGIN_USE_CASE_PROVIDER,
-  useClass: LoginInteractor,
+export const AuthLoginUseCaseProvider: Provider = {
+  provide: AUTH_LOGIN_USE_CASE_PROVIDER,
+  useClass: AuthLoginInteractor,
 };
