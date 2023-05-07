@@ -13,5 +13,7 @@ RUN yarn install --frozen-lockfile
 
 RUN yarn global add @nestjs/cli
 
-COPY prisma/schema.prisma /api/prisma/schema.prisma
+COPY src/adaptor/primary/rdbms/prisma /api/src/adaptor/primary/rdbms/prisma
 RUN yarn prisma:generate
+
+ENV NODE_ENV=development

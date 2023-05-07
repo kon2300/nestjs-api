@@ -15,7 +15,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prisma:dev": "prisma migrate dev --name init",
+    "prisma:dev": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:reset": "prisma migrate reset"
   },
@@ -65,7 +65,7 @@
     "typescript": "^4.7.4"
   },
   "prisma": {
-    "schema": "./prisma/schema.prisma"
+    "schema": "./src/adaptor/primary/rdbms/prisma/schema.prisma"
   },
   "jest": {
     "moduleFileExtensions": [
