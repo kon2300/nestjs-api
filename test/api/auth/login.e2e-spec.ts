@@ -1,27 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
-import { ConfigModule } from '@nestjs/config';
 import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
 import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
-import { createTestResponse } from '@test/api/create.test.response';
+import { createTestResponse } from '@test/common/create.test.response';
 
 describe('【e2eテスト】/auth/login', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          envFilePath: '.env.testing',
-        }),
-        AppModule,
-      ],
+      imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe());
     await app.init();
   });
 
