@@ -1,4 +1,4 @@
-import { User } from '@/domain/user/user';
+import { TestUser } from '@/domain/user/user.domain';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
@@ -20,7 +20,7 @@ export class UserQuery implements IUserQueryService {
     },
   ];
 
-  async findOne(username: string): Promise<User | undefined> {
+  async findOne(username: string): Promise<TestUser | undefined> {
     return this.users.find((user) => user.username === username);
   }
 }
