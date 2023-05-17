@@ -1,9 +1,9 @@
-export type LoginInputDto = {
-  username: string;
+export type AuthLoginInputDto = {
+  id: string;
+  email: string;
   password: string;
 };
 
-export type LoginOutputDto = {
+export type AuthLoginOutputDto = {
   accessToken: string;
-  user: any;
 };

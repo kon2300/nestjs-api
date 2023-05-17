@@ -30,12 +30,12 @@ const createMessage = (statusCode: HttpStatus): ResponseStatusDescription => {
  * @param data
  * @returns
  */
-export const createResponse = <T>(
+export const createTestResponse = <T>(
   statusCode: HttpStatus,
   data: T = {} as T,
 ): CreateResponse<T> => {
   return {
-    timeStamp: new Date().toISOString(),
+    timeStamp: expect.anything(),
     statusCode: statusCode,
     message: createMessage(statusCode),
     data,

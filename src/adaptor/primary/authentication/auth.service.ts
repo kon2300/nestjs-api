@@ -2,30 +2,21 @@ import {
   AUTH_SERVICE_PROVIDER,
   IAuthService,
 } from '@/usecase/authentication/auth.service.interface';
-import { Injectable, Provider, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import {
+  AuthLoginInputDto,
+  AuthLoginOutputDto,
+} from '@/usecase/authentication/login.dto';
 
 @Injectable()
 class AuthService implements IAuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService) {}
 
-  async validateUser(inputPassword: string, password: string): Promise<any> {
-    if (inputPassword === password) {
-      return;
-    }
-    throw new UnauthorizedException(
-      'パスワード、もしくはメールアドレスに誤りがあります',
-    );
-  }
-
-  async login(user: { username: string }): Promise<{
-    accessToken: string;
-    user: { username: string };
-  }> {
-    const payload = { username: user.username };
+  async login(loginUser: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
+    const payload = { iss: 'appName', userId: loginUser.id };
     return {
       accessToken: this.jwtService.sign(payload),
-      user,
     };
   }
 }
