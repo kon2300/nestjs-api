@@ -1,27 +1,24 @@
-import { TestUser } from '@/domain/user/user.domain';
+import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prisma.service';
+import {
+  FindByEmailInputDto,
+  FindByEmailOutputDto,
+} from '@/usecase/queries/user/find.unique.dto';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
-} from '@/usecase/queries/user.query.service.interface';
+} from '@/usecase/queries/user/user.query.service.interface';
 import { Injectable, Provider } from '@nestjs/common';
 
 @Injectable()
 export class UserQuery implements IUserQueryService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  constructor(private readonly prismaService: PrismaService) {}
 
-  async findOne(username: string): Promise<TestUser | undefined> {
-    return this.users.find((user) => user.username === username);
+  async findByEmail(input: FindByEmailInputDto): Promise<FindByEmailOutputDto> {
+    return this.prismaService.pUser.findUnique({
+      where: {
+        email: input.email,
+      },
+    });
   }
 }
 

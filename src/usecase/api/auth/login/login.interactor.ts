@@ -16,11 +16,12 @@ import {
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
-} from '@/usecase/queries/user.query.service.interface';
+} from '@/usecase/queries/user/user.query.service.interface';
 import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
 } from '@/usecase/api/auth/login/login.dto';
+import { User } from '@/domain/user/user.domain';
 
 @Injectable()
 class AuthLoginInteractor implements IAuthLoginUseCase {
@@ -31,14 +32,18 @@ class AuthLoginInteractor implements IAuthLoginUseCase {
   ) {}
 
   async run(input: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
-    const user = await this.userQueryService.findOne(input.username);
+    const findUser = await this.userQueryService.findByEmail({
+      email: input.email,
+    });
 
-    if (!user)
+    if (!findUser)
       throw new HttpException('ユーザが存在しません', HttpStatus.NOT_FOUND);
 
-    const res = await this.authService.login({
-      username: user?.username,
-    });
+    const user = new User(findUser);
+    const loginUser = user.login(input.password);
+
+    const res = await this.authService.login(loginUser);
+
     return res;
   }
 }

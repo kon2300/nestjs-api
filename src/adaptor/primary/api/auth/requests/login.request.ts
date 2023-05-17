@@ -4,7 +4,7 @@ export class AuthLoginRequest {
   @IsNotEmpty()
   @IsString()
   @MaxLength(20)
-  username: string;
+  email: string;
 
   @IsNotEmpty()
   @IsString()

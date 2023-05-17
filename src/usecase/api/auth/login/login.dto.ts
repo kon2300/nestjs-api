@@ -1,9 +1,9 @@
 export type AuthLoginInputDto = {
-  username: string;
+  id: string;
+  email: string;
   password: string;
 };
 
 export type AuthLoginOutputDto = {
   accessToken: string;
-  user: any;
 };

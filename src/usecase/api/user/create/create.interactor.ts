@@ -18,9 +18,10 @@ class UserCreateInteractor implements IUserCreateUseCase {
   ) {}
 
   async run(input: UserCreateInputDto): Promise<void> {
-    const user = new User(input.email, input.password);
+    const user = new User(input);
+    const newUser = user.create();
 
-    await this.userRepository.create(user.create());
+    await this.userRepository.create(newUser);
 
     return;
   }

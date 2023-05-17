@@ -5,7 +5,6 @@ import {
   HttpStatus,
   Inject,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@/adaptor/primary/authentication/jwt-auth.guard';
@@ -16,6 +15,7 @@ import {
 } from '@/usecase/api/user/create/create.usecase';
 import { createResponse } from '@/adaptor/primary/api/create.response';
 import { BaseResponse } from '@/adaptor/primary/api/base.response';
+import { CurrentUserId } from '@/common/decorators/currentUserIdDecorator';
 
 @Controller('user')
 export class UserController {
@@ -23,10 +23,11 @@ export class UserController {
     @Inject(USER_CREATE_USE_CASE_PROVIDER)
     private readonly userCreateUsecase: IUserCreateUseCase,
   ) {}
-  @UseGuards(JwtAuthGuard)
+
   @Get('profile')
-  getProfile(@Request() req: any) {
-    return req.user;
+  @UseGuards(JwtAuthGuard)
+  getProfile(@CurrentUserId() userId: string) {
+    return createResponse(HttpStatus.OK, { userId });
   }
 
   @Post('create')
