@@ -5,6 +5,8 @@ import { AppModule } from '@/app.module';
 import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
 import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
 import { createTestResponse } from '@test/common/create.test.response';
+import { prisma } from '@test/common/prisma.client';
+import { User } from '@/domain/user/user.domain';
 
 describe('【e2eテスト】/auth/login', () => {
   let app: INestApplication;
@@ -16,20 +18,25 @@ describe('【e2eテスト】/auth/login', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+
+    const user = new User(authLoginRequest);
+    const newUser = user.create();
+    await prisma.pUser.create({ data: newUser });
+  });
+
+  afterAll(async () => {
+    await prisma.pUser.deleteMany();
   });
 
   const authLoginRequest: AuthLoginRequest = {
-    username: 'john',
-    password: 'changeme',
+    email: 'test@test.com',
+    password: 'testPassword',
   };
 
   const authLoginResponse: AuthLoginResponse = createTestResponse(
     HttpStatus.OK,
     {
       accessToken: expect.anything(),
-      user: {
-        username: 'john',
-      },
     },
   );
 
