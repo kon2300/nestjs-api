@@ -1,14 +1,8 @@
-import {
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-  Provider,
-} from '@nestjs/common';
+import { Inject, Injectable, Provider } from '@nestjs/common';
 import {
   AUTH_LOGIN_USE_CASE_PROVIDER,
   IAuthLoginUseCase,
-} from '@/usecase/api/auth/login/login.usecase';
+} from '@/usecase/api/auth/login/auth.login.usecase';
 import {
   AUTH_SERVICE_PROVIDER,
   IAuthService,
@@ -20,8 +14,7 @@ import {
 import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
-} from '@/usecase/api/auth/login/login.dto';
-import { User } from '@/domain/user/user.domain';
+} from '@/usecase/api/auth/login/dto/auth.login.dto';
 
 @Injectable()
 class AuthLoginInteractor implements IAuthLoginUseCase {
@@ -32,14 +25,10 @@ class AuthLoginInteractor implements IAuthLoginUseCase {
   ) {}
 
   async run(input: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
-    const findUser = await this.userQueryService.findByEmail({
+    const user = await this.userQueryService.findByEmail({
       email: input.email,
     });
 
-    if (!findUser)
-      throw new HttpException('ユーザが存在しません', HttpStatus.NOT_FOUND);
-
-    const user = new User(findUser);
     const loginUser = user.login(input.password);
 
     const res = await this.authService.login(loginUser);

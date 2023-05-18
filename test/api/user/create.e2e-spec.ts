@@ -3,7 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { createTestResponse } from '@test/common/create.test.response';
-import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/create.request';
+import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/user.create.request';
 import { prisma } from '@test/common/prisma.client';
 
 describe('【e2eテスト】/user/create', () => {

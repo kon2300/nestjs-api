@@ -1,8 +1,9 @@
 import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prisma.service';
+import { User } from '@/domain/user/user.domain';
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,
-} from '@/usecase/queries/user/find.unique.dto';
+} from '@/usecase/queries/user/dto/user.query.find.by.email.dto';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
@@ -14,11 +15,15 @@ export class UserQuery implements IUserQueryService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findByEmail(input: FindByEmailInputDto): Promise<FindByEmailOutputDto> {
-    return this.prismaService.pUser.findUnique({
+    const findUser = await this.prismaService.pUser.findUnique({
       where: {
         email: input.email,
       },
     });
+
+    const user = new User();
+    user.reConstructor(findUser as unknown as User);
+    return user;
   }
 }
 

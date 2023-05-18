@@ -8,11 +8,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@/adaptor/primary/authentication/jwt-auth.guard';
-import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/create.request';
+import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/user.create.request';
 import {
   IUserCreateUseCase,
   USER_CREATE_USE_CASE_PROVIDER,
-} from '@/usecase/api/user/create/create.usecase';
+} from '@/usecase/api/user/create/user.create.usecase';
 import { createResponse } from '@/adaptor/primary/api/create.response';
 import { BaseResponse } from '@/adaptor/primary/api/base.response';
 import { CurrentUserId } from '@/common/decorators/currentUserIdDecorator';

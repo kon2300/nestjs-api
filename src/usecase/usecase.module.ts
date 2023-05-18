@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AuthLoginUseCaseProvider } from '@/usecase/api/auth/login/login.interactor';
+import { AuthLoginUseCaseProvider } from '@/usecase/api/auth/login/auth.login.interactor';
 import { AdaptorAuthModule } from '@/adaptor/primary/authentication/adaptor.auth.module';
 import { AdaptorCqrsModule } from '@/adaptor/secondary/cqrs/adaptor.cqrs.module';
-import { UserCreateUseCaseProvider } from '@/usecase/api/user/create/create.interactor';
+import { UserCreateUseCaseProvider } from '@/usecase/api/user/create/user.create.interactor';
 
 @Module({
   imports: [AdaptorAuthModule, AdaptorCqrsModule],

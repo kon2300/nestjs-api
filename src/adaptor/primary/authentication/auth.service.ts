@@ -7,14 +7,14 @@ import { JwtService } from '@nestjs/jwt';
 import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
-} from '@/usecase/authentication/login.dto';
+} from '@/usecase/authentication/dto/auth.login.dto';
 
 @Injectable()
 class AuthService implements IAuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   async login(loginUser: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
-    const payload = { iss: 'appName', userId: loginUser.id };
+    const payload = { iss: 'appName', userId: loginUser.userId };
     return {
       accessToken: this.jwtService.sign(payload),
     };

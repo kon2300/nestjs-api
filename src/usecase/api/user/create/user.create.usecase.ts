@@ -1,4 +1,4 @@
-import { UserCreateInputDto } from '@/usecase/api/user/create/create.dto';
+import { UserCreateInputDto } from '@/usecase/api/user/create/dto/user.create.dto';
 
 export const USER_CREATE_USE_CASE_PROVIDER = 'USER_CREATE_USE_CASE_PROVIDER';
 
