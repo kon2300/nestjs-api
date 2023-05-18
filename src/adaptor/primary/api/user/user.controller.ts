@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@/adaptor/primary/authentication/jwt-auth.guard';
-import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/user.create.request';
+import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/user.create.request.dto';
 import {
   IUserCreateUseCase,
   USER_CREATE_USE_CASE_PROVIDER,
