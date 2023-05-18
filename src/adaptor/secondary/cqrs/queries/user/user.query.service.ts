@@ -3,7 +3,7 @@ import { User } from '@/domain/user/user';
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,
-} from '@/usecase/queries/user/dto/user.query.find.by.email.dto';
+} from '@/usecase/queries/user/dto/find.by.email.dto';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
