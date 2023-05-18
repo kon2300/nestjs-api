@@ -1,5 +1,5 @@
 import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prisma.service';
-import { User } from '@/domain/user/user.domain';
+import { User } from '@/domain/user/user';
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,

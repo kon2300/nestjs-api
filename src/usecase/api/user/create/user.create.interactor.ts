@@ -4,7 +4,7 @@ import {
   IUserCreateUseCase,
 } from '@/usecase/api/user/create/user.create.usecase';
 import { UserCreateInputDto } from '@/usecase/api/user/create/dto/user.create.dto';
-import { User } from '@/domain/user/user.domain';
+import { User } from '@/domain/user/user';
 import {
   IUserRepository,
   USER_REPOSITORY_PROVIDER,

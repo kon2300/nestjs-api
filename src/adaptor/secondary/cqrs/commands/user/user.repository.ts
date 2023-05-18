@@ -1,5 +1,5 @@
 import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prisma.service';
-import { CreateUser } from '@/domain/user/dto/user.domain.create.user.dto';
+import { CreateUser } from '@/domain/user/dto/create.user.dto';
 import {
   IUserRepository,
   USER_REPOSITORY_PROVIDER,

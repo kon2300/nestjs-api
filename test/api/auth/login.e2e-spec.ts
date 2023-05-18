@@ -6,7 +6,7 @@ import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/auth.login
 import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/auth.login.response.dto';
 import { createTestResponse } from '@test/common/create.test.response';
 import { prisma } from '@test/common/prisma.client';
-import { User } from '@/domain/user/user.domain';
+import { User } from '@/domain/user/user';
 
 describe('【e2eテスト】/auth/login', () => {
   let app: INestApplication;

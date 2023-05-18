@@ -1,4 +1,4 @@
-import { User } from '@/domain/user/user.domain';
+import { User } from '@/domain/user/user';
 
 export type FindByEmailInputDto = {
   email: string;
