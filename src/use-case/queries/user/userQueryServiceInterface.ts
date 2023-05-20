@@ -1,7 +1,7 @@
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,
-} from '@/usecase/queries/user/dto/findByEmailDto';
+} from '@/use-case/queries/user/dto/findByEmailDto';
 
 export const USER_QUERY_SERVICE_PROVIDER = 'USER_QUERY_SERVICE_PROVIDER';
 

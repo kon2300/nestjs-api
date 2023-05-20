@@ -3,11 +3,11 @@ import { User } from '@/domain/user/user';
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,
-} from '@/usecase/queries/user/dto/findByEmailDto';
+} from '@/use-case/queries/user/dto/findByEmailDto';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
-} from '@/usecase/queries/user/userQueryServiceInterface';
+} from '@/use-case/queries/user/userQueryServiceInterface';
 import { Injectable, Provider } from '@nestjs/common';
 
 @Injectable()

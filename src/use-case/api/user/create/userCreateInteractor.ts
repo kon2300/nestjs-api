@@ -2,8 +2,8 @@ import { Inject, Injectable, Provider } from '@nestjs/common';
 import {
   USER_CREATE_USE_CASE_PROVIDER,
   IUserCreateUseCase,
-} from '@/usecase/api/user/create/userCreateUseCase';
-import { UserCreateInputDto } from '@/usecase/api/user/create/dto/userCreateDto';
+} from '@/use-case/api/user/create/userCreateUseCase';
+import { UserCreateInputDto } from '@/use-case/api/user/create/dto/userCreateDto';
 import { User } from '@/domain/user/user';
 import {
   IUserRepository,

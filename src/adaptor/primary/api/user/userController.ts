@@ -12,7 +12,7 @@ import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/userCreat
 import {
   IUserCreateUseCase,
   USER_CREATE_USE_CASE_PROVIDER,
-} from '@/usecase/api/user/create/userCreateUseCase';
+} from '@/use-case/api/user/create/userCreateUseCase';
 import { createResponse } from '@/adaptor/primary/api/createResponse';
 import { BaseResponse } from '@/adaptor/primary/api/baseResponse';
 import { CurrentUserId } from '@/common/decorators/currentUserIdDecorator';

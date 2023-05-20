@@ -1,7 +1,7 @@
 import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
-} from '@/usecase/api/auth/login/dto/authLoginDto';
+} from '@/use-case/api/auth/login/dto/authLoginDto';
 
 export const AUTH_LOGIN_USE_CASE_PROVIDER = 'AUTH_LOGIN_USE_CASE_PROVIDER';
 

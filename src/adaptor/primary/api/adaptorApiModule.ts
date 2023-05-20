@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from '@/adaptor/primary/api/auth/authController';
-import { UseCaseModule } from '@/usecase/useCaseModule';
+import { UseCaseModule } from '@/use-case/useCaseModule';
 import { UserController } from '@/adaptor/primary/api/user/userController';
 
 @Module({

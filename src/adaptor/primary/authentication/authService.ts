@@ -1,13 +1,13 @@
 import {
   AUTH_SERVICE_PROVIDER,
   IAuthService,
-} from '@/usecase/authentication/authServiceInterface';
+} from '@/use-case/authentication/authServiceInterface';
 import { Injectable, Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import {
   AuthServiceLoginInputDto,
   AuthServiceLoginOutputDto,
-} from '@/usecase/authentication/dto/authServiceLoginDto';
+} from '@/use-case/authentication/dto/authServiceLoginDto';
 
 @Injectable()
 class AuthService implements IAuthService {
