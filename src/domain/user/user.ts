@@ -1,8 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { randomUUID } from 'crypto';
-import { CreateUser } from '@/domain/user/dto/createUserDto';
-import { LoginUser } from '@/domain/user/dto/loginUserDto';
 
 /**
  * @param id ユーザーID
@@ -21,6 +19,19 @@ export interface UserDomain {
   updatedAt: Date;
 }
 
+type CreateUser = Readonly<{
+  id: string;
+  email: string;
+  password: string;
+  salt: string;
+  createdAt: Date;
+  updatedAt: Date;
+}>;
+
+type LoginUser = Readonly<{
+  userId: string;
+}>;
+
 export class User implements UserDomain {
   id: string;
   email: string;
@@ -38,10 +49,24 @@ export class User implements UserDomain {
   }
 
   reConstructor(init: Partial<UserDomain>): void {
-    if (init === null)
+    Object.assign(this, init);
+    return;
+  }
+
+  duplicate(): void {
+    if (this.id != null)
+      throw new HttpException(
+        'すでに登録済みのユーザーです',
+        HttpStatus.BAD_REQUEST,
+      );
+
+    return;
+  }
+
+  exists(): void {
+    if (this.id == null)
       throw new HttpException('ユーザが存在しません', HttpStatus.NOT_FOUND);
 
-    Object.assign(this, init);
     return;
   }
 
@@ -65,7 +90,7 @@ export class User implements UserDomain {
   login(inputPassword: string): LoginUser {
     if (compareSync(inputPassword, this.password)) {
       return {
-        id: this.id,
+        userId: this.id,
       };
     }
 

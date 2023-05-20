@@ -1,4 +1,4 @@
-export type CreateUser = Readonly<{
+export type UpsertUser = Readonly<{
   id: string;
   email: string;
   password: string;

@@ -29,6 +29,8 @@ class AuthLoginInteractor implements IAuthLoginUseCase {
       email: input.email,
     });
 
+    user.exists();
+
     const loginUser = user.login(input.password);
 
     const res = await this.authService.login(loginUser);

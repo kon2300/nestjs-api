@@ -1,7 +1,7 @@
-import { CreateUser } from '@/domain/user/dto/createUserDto';
+import { UpsertUser } from '@/domain/user/dto/upsertUserDto';
 
 export const USER_REPOSITORY_PROVIDER = 'USER_REPOSITORY_PROVIDER';
 
 export interface IUserRepository {
-  create(user: CreateUser): Promise<void>;
+  upsert(user: UpsertUser): Promise<void>;
 }
