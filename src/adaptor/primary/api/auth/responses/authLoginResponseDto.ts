@@ -1,4 +1,4 @@
-import { BaseResponse } from '@/adaptor/primary/api/base.response';
+import { BaseResponse } from '@/adaptor/primary/api/baseResponse';
 
 export class AuthLoginResponse extends BaseResponse {
   data: {

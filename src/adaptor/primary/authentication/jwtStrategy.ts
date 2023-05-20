@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import {
   AuthServiceValidateInputDto,
   AuthServiceValidateOutputDto,
-} from '@/usecase/authentication/dto/auth.service.validate.dto';
+} from '@/usecase/authentication/dto/authServiceValidateDto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

@@ -2,19 +2,19 @@ import { Inject, Injectable, Provider } from '@nestjs/common';
 import {
   AUTH_LOGIN_USE_CASE_PROVIDER,
   IAuthLoginUseCase,
-} from '@/usecase/api/auth/login/auth.login.usecase';
+} from '@/usecase/api/auth/login/authLoginUseCase';
 import {
   AUTH_SERVICE_PROVIDER,
   IAuthService,
-} from '@/usecase/authentication/auth.service.interface';
+} from '@/usecase/authentication/authServiceInterface';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
-} from '@/usecase/queries/user/user.query.service.interface';
+} from '@/usecase/queries/user/userQueryServiceInterface';
 import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
-} from '@/usecase/api/auth/login/dto/auth.login.dto';
+} from '@/usecase/api/auth/login/dto/authLoginDto';
 
 @Injectable()
 class AuthLoginInteractor implements IAuthLoginUseCase {

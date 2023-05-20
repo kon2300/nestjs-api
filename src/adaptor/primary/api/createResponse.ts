@@ -1,7 +1,7 @@
 import {
   RESPONSE_STATUS_DESCRIPTION,
   ResponseStatusDescription,
-} from '@/common/constants/response.status.description';
+} from '@/common/constants/responseStatusDescription';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 type CreateResponse<T> = {

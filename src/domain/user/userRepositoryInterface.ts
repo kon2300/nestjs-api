@@ -1,4 +1,4 @@
-import { CreateUser } from '@/domain/user/dto/create.user.dto';
+import { CreateUser } from '@/domain/user/dto/createUserDto';
 
 export const USER_REPOSITORY_PROVIDER = 'USER_REPOSITORY_PROVIDER';
 

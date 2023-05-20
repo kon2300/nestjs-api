@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { randomUUID } from 'crypto';
-import { CreateUser } from '@/domain/user/dto/create.user.dto';
-import { LoginUser } from '@/domain/user/dto/login.user.dto';
+import { CreateUser } from '@/domain/user/dto/createUserDto';
+import { LoginUser } from '@/domain/user/dto/loginUserDto';
 
 /**
  * @param id ユーザーID

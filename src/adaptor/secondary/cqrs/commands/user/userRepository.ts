@@ -1,9 +1,9 @@
-import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prisma.service';
-import { CreateUser } from '@/domain/user/dto/create.user.dto';
+import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prismaService';
+import { CreateUser } from '@/domain/user/dto/createUserDto';
 import {
   IUserRepository,
   USER_REPOSITORY_PROVIDER,
-} from '@/domain/user/user.repository.interface';
+} from '@/domain/user/userRepositoryInterface';
 import { Injectable, Provider } from '@nestjs/common';
 
 @Injectable()

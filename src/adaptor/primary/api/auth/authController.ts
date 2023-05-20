@@ -2,10 +2,10 @@ import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import {
   AUTH_LOGIN_USE_CASE_PROVIDER,
   IAuthLoginUseCase,
-} from '@/usecase/api/auth/login/auth.login.usecase';
-import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/auth.login.request.dto';
-import { createResponse } from '@/adaptor/primary/api/create.response';
-import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/auth.login.response.dto';
+} from '@/usecase/api/auth/login/authLoginUseCase';
+import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/authLoginRequestDto';
+import { createResponse } from '@/adaptor/primary/api/createResponse';
+import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/authLoginResponseDto';
 
 @Controller('auth')
 export class AuthController {

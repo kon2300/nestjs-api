@@ -1,4 +1,4 @@
-import { ResponseStatusDescription } from '@/common/constants/response.status.description';
+import { ResponseStatusDescription } from '@/common/constants/responseStatusDescription';
 import { HttpStatus } from '@nestjs/common';
 
 export class BaseResponse {

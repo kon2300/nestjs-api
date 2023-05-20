@@ -1,13 +1,13 @@
-import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prisma.service';
+import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prismaService';
 import { User } from '@/domain/user/user';
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,
-} from '@/usecase/queries/user/dto/find.by.email.dto';
+} from '@/usecase/queries/user/dto/findByEmailDto';
 import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
-} from '@/usecase/queries/user/user.query.service.interface';
+} from '@/usecase/queries/user/userQueryServiceInterface';
 import { Injectable, Provider } from '@nestjs/common';
 
 @Injectable()

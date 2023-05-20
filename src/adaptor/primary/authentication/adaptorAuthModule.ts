@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from '@/adaptor/primary/authentication/jwt.strategy';
-import { AuthServiceProvider } from '@/adaptor/primary/authentication/auth.service';
-import { AdaptorRdbmsPrismaModule } from '@/adaptor/primary/rdbms/prisma/adaptor.prisma.module';
+import { JwtStrategy } from '@/adaptor/primary/authentication/jwtStrategy';
+import { AuthServiceProvider } from '@/adaptor/primary/authentication/authService';
+import { AdaptorRdbmsPrismaModule } from '@/adaptor/primary/rdbms/prisma/adaptorPrismaModule';
 
 @Module({
   imports: [

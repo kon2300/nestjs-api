@@ -2,13 +2,13 @@ import { Inject, Injectable, Provider } from '@nestjs/common';
 import {
   USER_CREATE_USE_CASE_PROVIDER,
   IUserCreateUseCase,
-} from '@/usecase/api/user/create/user.create.usecase';
-import { UserCreateInputDto } from '@/usecase/api/user/create/dto/user.create.dto';
+} from '@/usecase/api/user/create/userCreateUseCase';
+import { UserCreateInputDto } from '@/usecase/api/user/create/dto/userCreateDto';
 import { User } from '@/domain/user/user';
 import {
   IUserRepository,
   USER_REPOSITORY_PROVIDER,
-} from '@/domain/user/user.repository.interface';
+} from '@/domain/user/userRepositoryInterface';
 
 @Injectable()
 class UserCreateInteractor implements IUserCreateUseCase {
