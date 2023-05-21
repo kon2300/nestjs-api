@@ -2,14 +2,6 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { randomUUID } from 'crypto';
 
-/**
- * @param id ユーザーID
- * @param email emailアドレス
- * @param password パスワード
- * @param salt パスワード(hash)
- * @param createdAt 登録日
- * @param updatedAt 更新日
- */
 export type UserDomain = {
   id: string;
   email: string;
@@ -20,29 +12,45 @@ export type UserDomain = {
 };
 
 export class User {
+  /** ユーザーID */
   private id: string;
+  /** emailアドレス */
   private email: string;
+  /** パスワード */
   private password: string;
+  /** パスワード(hash) */
   private salt: string;
+  /** 登録日 */
   private createdAt: Date;
+  /** 更新日 */
   private updatedAt: Date;
 
+  /** 初期化（引数なし） */
   constructor();
 
+  /** 初期化（引数あり） */
   constructor(init: Partial<UserDomain>);
 
+  /** 初期化 */
   constructor(init?: Partial<UserDomain>) {
     Object.assign(this, init);
   }
 
+  /**
+   * 初期化した後に値を更新する
+   * - ex: データベースから取得した値を詰め直す
+   * - ex: {@link duplicate}の処理を通過した後に、入力された値を詰める
+   * */
   set reConstructor(init: Partial<UserDomain>) {
     Object.assign(this, init);
   }
 
+  /** ログイン処理に必要な情報を取得する */
   get loginProperty() {
     return this.id;
   }
 
+  /** 保存処理に必要な値を取得する */
   get saveProperty() {
     return {
       id: this.id,
@@ -54,6 +62,7 @@ export class User {
     };
   }
 
+  /** ユーザーの重複確認 */
   duplicate(): void {
     if (this.id != null)
       throw new HttpException(
@@ -64,6 +73,7 @@ export class User {
     return;
   }
 
+  /** ユーザーの存在確認 */
   exists(): void {
     if (this.id == null)
       throw new HttpException('ユーザが存在しません', HttpStatus.NOT_FOUND);
@@ -71,6 +81,7 @@ export class User {
     return;
   }
 
+  /** ユーザーを作成する */
   create(): void {
     this.id = randomUUID();
     this.salt = genSaltSync();
@@ -81,6 +92,7 @@ export class User {
     return;
   }
 
+  /** ログインの確認 */
   login(inputPassword: string): void {
     if (!compareSync(inputPassword, this.password)) {
       throw new HttpException(

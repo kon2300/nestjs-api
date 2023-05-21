@@ -6,5 +6,6 @@ import {
 export const AUTH_LOGIN_USE_CASE_PROVIDER = 'AUTH_LOGIN_USE_CASE_PROVIDER';
 
 export interface IAuthLoginUseCase {
+  /** ユーザーを承認する */
   run(input: AuthLoginInputDto): Promise<AuthLoginOutputDto>;
 }
