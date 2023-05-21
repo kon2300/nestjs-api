@@ -1,5 +1,5 @@
 import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prismaService';
-import { UpsertUser } from '@/domain/user/dto/upsertUserDto';
+import { SaveUser } from '@/domain/user/dto/saveUserDto';
 import {
   IUserRepository,
   USER_REPOSITORY_PROVIDER,
@@ -10,7 +10,7 @@ import { Injectable, Provider } from '@nestjs/common';
 class UserRepository implements IUserRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async upsert(user: UpsertUser): Promise<void> {
+  async save(user: SaveUser): Promise<void> {
     await this.prismaService.pUser.upsert({
       where: { email: user.email },
       create: user,

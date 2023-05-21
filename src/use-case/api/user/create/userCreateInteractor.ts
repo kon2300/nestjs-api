@@ -29,10 +29,10 @@ class UserCreateInteractor implements IUserCreateUseCase {
 
     user.duplicate();
 
-    user.reConstructor(input);
+    user.reConstructor = input;
     user.create();
 
-    await this.userRepository.upsert(user);
+    await this.userRepository.save(user.saveProperty);
 
     return;
   }

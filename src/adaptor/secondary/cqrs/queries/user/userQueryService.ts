@@ -1,5 +1,5 @@
 import { PrismaService } from '@/adaptor/primary/rdbms/prisma/prismaService';
-import { User } from '@/domain/user/user';
+import { User, UserDomain } from '@/domain/user/user';
 import {
   FindByEmailInputDto,
   FindByEmailOutputDto,
@@ -22,7 +22,8 @@ export class UserQuery implements IUserQueryService {
     });
 
     const user = new User();
-    user.reConstructor(findUser as unknown as User);
+    user.reConstructor = findUser as unknown as UserDomain;
+
     return user;
   }
 }

@@ -21,7 +21,7 @@ describe('【e2eテスト】/auth/login', () => {
 
     const user = new User(authLoginRequest);
     user.create();
-    await prisma.pUser.create({ data: user });
+    await prisma.pUser.create({ data: user.saveProperty });
   });
 
   afterAll(async () => {

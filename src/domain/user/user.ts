@@ -10,35 +10,22 @@ import { randomUUID } from 'crypto';
  * @param createdAt 登録日
  * @param updatedAt 更新日
  */
-export interface UserDomain {
+export type UserDomain = {
   id: string;
   email: string;
   password: string;
   salt: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
-type CreateUser = Readonly<{
-  id: string;
-  email: string;
-  password: string;
-  salt: string;
-  createdAt: Date;
-  updatedAt: Date;
-}>;
-
-type LoginUser = Readonly<{
-  userId: string;
-}>;
-
-export class User implements UserDomain {
-  id: string;
-  email: string;
-  password: string;
-  salt: string;
-  createdAt: Date;
-  updatedAt: Date;
+export class User {
+  private id: string;
+  private email: string;
+  private password: string;
+  private salt: string;
+  private createdAt: Date;
+  private updatedAt: Date;
 
   constructor();
 
@@ -48,9 +35,23 @@ export class User implements UserDomain {
     Object.assign(this, init);
   }
 
-  reConstructor(init: Partial<UserDomain>): void {
+  set reConstructor(init: Partial<UserDomain>) {
     Object.assign(this, init);
-    return;
+  }
+
+  get loginProperty() {
+    return this.id;
+  }
+
+  get saveProperty() {
+    return {
+      id: this.id,
+      email: this.email,
+      password: this.password,
+      salt: this.salt,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
   }
 
   duplicate(): void {
@@ -70,33 +71,24 @@ export class User implements UserDomain {
     return;
   }
 
-  create(): CreateUser {
+  create(): void {
     this.id = randomUUID();
     this.salt = genSaltSync();
     this.password = hashSync(this.password, this.salt);
     this.createdAt = new Date();
     this.updatedAt = new Date();
 
-    return {
-      id: this.id,
-      email: this.email,
-      password: this.password,
-      salt: this.salt,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    };
+    return;
   }
 
-  login(inputPassword: string): LoginUser {
-    if (compareSync(inputPassword, this.password)) {
-      return {
-        userId: this.id,
-      };
+  login(inputPassword: string): void {
+    if (!compareSync(inputPassword, this.password)) {
+      throw new HttpException(
+        'パスワード、もしくはメールアドレスに誤りがあります',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
-    throw new HttpException(
-      'パスワード、もしくはメールアドレスに誤りがあります',
-      HttpStatus.UNAUTHORIZED,
-    );
+    return;
   }
 }

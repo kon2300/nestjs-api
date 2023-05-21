@@ -1,7 +1,7 @@
-import { UpsertUser } from '@/domain/user/dto/upsertUserDto';
+import { SaveUser } from '@/domain/user/dto/saveUserDto';
 
 export const USER_REPOSITORY_PROVIDER = 'USER_REPOSITORY_PROVIDER';
 
 export interface IUserRepository {
-  upsert(user: UpsertUser): Promise<void>;
+  save(user: SaveUser): Promise<void>;
 }
