@@ -8,6 +8,6 @@ export const CurrentUserId = createParamDecorator(
   (_: unknown, context: ExecutionContext): number => {
     const request = context.switchToHttp().getRequest();
     if (!request.user) throw new ForbiddenException();
-    return request.user.userId;
+    return request.user.id;
   },
 );

@@ -1,5 +1,5 @@
 export type AuthServiceLoginInputDto = {
-  userId: string;
+  id: string;
 };
 
 export type AuthServiceLoginOutputDto = {

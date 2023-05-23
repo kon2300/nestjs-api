@@ -1,9 +1,9 @@
 export type AuthServiceValidateInputDto = {
   iss: string;
-  userId: string;
+  id: string;
 };
 
 export type AuthServiceValidateOutputDto = {
   iss: string;
-  userId: string;
+  id: string;
 };

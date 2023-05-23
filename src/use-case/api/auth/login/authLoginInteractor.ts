@@ -15,6 +15,7 @@ import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
 } from '@/use-case/api/auth/login/dto/authLoginDto';
+import { User } from '@/domain/user/user';
 
 @Injectable()
 class AuthLoginInteractor implements IAuthLoginUseCase {
@@ -25,17 +26,17 @@ class AuthLoginInteractor implements IAuthLoginUseCase {
   ) {}
 
   async run(input: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
-    const user = await this.userQueryService.findByEmail({
+    const findUser = await this.userQueryService.findByEmail({
       email: input.email,
     });
+
+    const user = new User(findUser);
 
     user.exists();
 
     user.login(input.password);
 
-    const res = await this.authService.login({
-      userId: user.loginProperty,
-    });
+    const res = await this.authService.login(user.loginProperty);
 
     return res;
   }

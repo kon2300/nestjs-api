@@ -12,6 +12,7 @@ import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
 } from '@/use-case/queries/user/userQueryServiceInterface';
+import { User } from '@/domain/user/user';
 
 @Injectable()
 class UserCreateInteractor implements IUserCreateUseCase {
@@ -23,9 +24,11 @@ class UserCreateInteractor implements IUserCreateUseCase {
   ) {}
 
   async run(input: UserCreateInputDto): Promise<void> {
-    const user = await this.userQueryService.findByEmail({
+    const findUser = await this.userQueryService.findByEmail({
       email: input.email,
     });
+
+    const user = new User(findUser);
 
     user.duplicate();
 

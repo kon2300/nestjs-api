@@ -16,7 +16,7 @@ class AuthService implements IAuthService {
   async login(
     loginUser: AuthServiceLoginInputDto,
   ): Promise<AuthServiceLoginOutputDto> {
-    const payload = { iss: 'appName', userId: loginUser.userId };
+    const payload = { iss: 'appName', id: loginUser.id };
     return {
       accessToken: this.jwtService.sign(payload),
     };
