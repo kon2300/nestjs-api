@@ -1,7 +1,12 @@
-import { User } from '@/domain/user/user';
-
 export type FindByEmailInputDto = {
   email: string;
 };
 
-export type FindByEmailOutputDto = User;
+export type FindByEmailOutputDto = {
+  id: string;
+  email: string;
+  password: string;
+  salt: string;
+  createdAt: Date;
+  updatedAt: Date;
+} | null;
