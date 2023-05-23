@@ -15,14 +15,14 @@ type LoginProperty = Readonly<{
   id: string;
 }>;
 
-type SaveProperty = {
+type SaveProperty = Readonly<{
   id: string;
   email: string;
   password: string;
   salt: string;
   createdAt: Date;
   updatedAt: Date;
-};
+}>;
 
 export class User {
   /** ユーザーID */
