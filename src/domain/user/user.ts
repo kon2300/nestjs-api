@@ -50,7 +50,7 @@ export class User {
 
   /**
    * 初期化した後に値を更新する
-   * - ex: {@link duplicate}の処理を通過した後に、入力された値を詰める
+   * - ex. {@link duplicate}の処理を通過した後に、入力された値を詰める
    * */
   set reConstructor(init: Partial<UserDomain> | null) {
     Object.assign(this, init);
