@@ -3,7 +3,7 @@ import { AuthLoginInputDto } from '@/use-case/api/auth/login/dto/authLoginDto';
 
 const salt = genSaltSync();
 
-export const userForTest = {
+export const testDataForUser = {
   id: 'testId',
   email: 'test@test.com',
   password: hashSync('password', salt),
@@ -12,12 +12,12 @@ export const userForTest = {
   updatedAt: new Date(),
 };
 
-export const authLoginInputForTest: AuthLoginInputDto = {
+export const testDataForAuthLoginInput: AuthLoginInputDto = {
   email: 'test@test.com',
   password: 'password',
 };
 
-export const authLoginInputForFailedTest: AuthLoginInputDto = {
+export const failedTestDataAuthLoginInput: AuthLoginInputDto = {
   email: 'test@test.com',
   password: 'FailingPasswords',
 };

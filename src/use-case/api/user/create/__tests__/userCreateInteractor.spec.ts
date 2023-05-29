@@ -14,8 +14,8 @@ import {
   USER_REPOSITORY_PROVIDER,
 } from '@/domain/user/userRepositoryInterface';
 import {
-  userCreateInputForTest,
-  userForTest,
+  testDataForUserCreateInput,
+  testDataForUser,
 } from '@/use-case/api/user/create/__tests__/test-data/userCreateTestData';
 
 describe('userCreateInteractorのテスト', () => {
@@ -46,7 +46,9 @@ describe('userCreateInteractorのテスト', () => {
         jest.spyOn(userQueryService, 'findByEmail').mockResolvedValue(null);
         jest.spyOn(userRepository, 'save').mockResolvedValue();
 
-        const output = await userCreateInteractor.run(userCreateInputForTest);
+        const output = await userCreateInteractor.run(
+          testDataForUserCreateInput,
+        );
 
         expect(output).toBeUndefined();
       });
@@ -56,10 +58,10 @@ describe('userCreateInteractorのテスト', () => {
       it('同じemailのユーザーがいた場合、登録できないこと', async () => {
         jest
           .spyOn(userQueryService, 'findByEmail')
-          .mockResolvedValue(userForTest);
+          .mockResolvedValue(testDataForUser);
 
         expect(
-          userCreateInteractor.run(userCreateInputForTest),
+          userCreateInteractor.run(testDataForUserCreateInput),
         ).rejects.toThrow('すでに登録済みのユーザーです');
       });
     });

@@ -15,9 +15,9 @@ import {
 import { AuthLoginUseCaseProvider } from '@/use-case/api/auth/login/authLoginInteractor';
 import { AdaptorAuthModule } from '@/adaptor/primary/authentication/adaptorAuthModule';
 import {
-  authLoginInputForFailedTest,
-  authLoginInputForTest,
-  userForTest,
+  failedTestDataAuthLoginInput,
+  testDataForAuthLoginInput,
+  testDataForUser,
 } from '@/use-case/api/auth/login/__tests__/test-data/authLoginTestData';
 
 describe('authLoginInteractorのテスト', () => {
@@ -45,12 +45,12 @@ describe('authLoginInteractorのテスト', () => {
       it('登録済のユーザーであればログインできること', async () => {
         jest
           .spyOn(userQueryService, 'findByEmail')
-          .mockResolvedValue(userForTest);
+          .mockResolvedValue(testDataForUser);
         jest
           .spyOn(authService, 'login')
           .mockResolvedValue({ accessToken: 'testAccessToken' });
 
-        const output = await authLoginInteractor.run(authLoginInputForTest);
+        const output = await authLoginInteractor.run(testDataForAuthLoginInput);
 
         expect(output).toStrictEqual({ accessToken: 'testAccessToken' });
       });
@@ -60,18 +60,18 @@ describe('authLoginInteractorのテスト', () => {
       it('登録済ではないユーザーの場合ログインできないこと', async () => {
         jest.spyOn(userQueryService, 'findByEmail').mockResolvedValue(null);
 
-        expect(authLoginInteractor.run(authLoginInputForTest)).rejects.toThrow(
-          'ユーザが存在しません',
-        );
+        expect(
+          authLoginInteractor.run(testDataForAuthLoginInput),
+        ).rejects.toThrow('ユーザが存在しません');
       });
 
       it('emailとパスワードが一致しない場合ログインできないこと', async () => {
         jest
           .spyOn(userQueryService, 'findByEmail')
-          .mockResolvedValue(userForTest);
+          .mockResolvedValue(testDataForUser);
 
         expect(
-          authLoginInteractor.run(authLoginInputForFailedTest),
+          authLoginInteractor.run(failedTestDataAuthLoginInput),
         ).rejects.toThrow('パスワード、もしくはメールアドレスに誤りがあります');
       });
     });

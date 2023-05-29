@@ -3,7 +3,7 @@ import { UserCreateInputDto } from '@/use-case/api/user/create/dto/userCreateDto
 
 const salt = genSaltSync();
 
-export const userForTest = {
+export const testDataForUser = {
   id: 'testId',
   email: 'test@test.com',
   password: hashSync('password', salt),
@@ -12,7 +12,7 @@ export const userForTest = {
   updatedAt: new Date(),
 };
 
-export const userCreateInputForTest: UserCreateInputDto = {
+export const testDataForUserCreateInput: UserCreateInputDto = {
   email: 'test@test.com',
   password: 'testPassword',
 };
