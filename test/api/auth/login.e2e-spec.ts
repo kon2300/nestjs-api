@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { AppModule } from '@/app.module';
-import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/login.request';
-import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/login.response';
-import { createTestResponse } from '@test/common/create.test.response';
-import { prisma } from '@test/common/prisma.client';
-import { User } from '@/domain/user/user.domain';
+import { AppModule } from '@/appModule';
+import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/authLoginRequestDto';
+import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/authLoginResponseDto';
+import { createTestResponse } from '@test/common/createTestResponse';
+import { prisma } from '@test/common/prismaClient';
+import { User } from '@/domain/user/user';
 
 describe('【e2eテスト】/auth/login', () => {
   let app: INestApplication;
@@ -20,8 +20,8 @@ describe('【e2eテスト】/auth/login', () => {
     await app.init();
 
     const user = new User(authLoginRequest);
-    const newUser = user.create();
-    await prisma.pUser.create({ data: newUser });
+    user.create();
+    await prisma.pUser.create({ data: user.saveProperty });
   });
 
   afterAll(async () => {

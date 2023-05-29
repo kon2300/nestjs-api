@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { AppModule } from '@/app.module';
-import { createTestResponse } from '@test/common/create.test.response';
-import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/create.request';
-import { prisma } from '@test/common/prisma.client';
+import { AppModule } from '@/appModule';
+import { createTestResponse } from '@test/common/createTestResponse';
+import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/userCreateRequestDto';
+import { prisma } from '@test/common/prismaClient';
 
 describe('【e2eテスト】/user/create', () => {
   let app: INestApplication;
