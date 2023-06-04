@@ -6,7 +6,9 @@ import {
 import { AuthLoginRequest } from '@/adaptor/primary/api/auth/requests/authLoginRequestDto';
 import { createResponse } from '@/adaptor/primary/api/createResponse';
 import { AuthLoginResponse } from '@/adaptor/primary/api/auth/responses/authLoginResponseDto';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('/auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -14,6 +16,10 @@ export class AuthController {
     private readonly authLoginUseCase: IAuthLoginUseCase,
   ) {}
 
+  @ApiOkResponse({
+    description: 'ログイン成功時、アクセストークンを取得する',
+    type: AuthLoginResponse,
+  })
   @Post('login')
   async login(@Body() req: AuthLoginRequest): Promise<AuthLoginResponse> {
     const res = await this.authLoginUseCase.run(req);

@@ -16,7 +16,9 @@ import {
 import { createResponse } from '@/adaptor/primary/api/createResponse';
 import { BaseResponse } from '@/adaptor/primary/api/baseResponse';
 import { CurrentUserId } from '@/common/decorators/currentUserIdDecorator';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('/user')
 @Controller('user')
 export class UserController {
   constructor(
@@ -30,6 +32,10 @@ export class UserController {
     return createResponse(HttpStatus.OK, { userId });
   }
 
+  @ApiCreatedResponse({
+    description: 'ユーザーを新規作成する',
+    type: BaseResponse,
+  })
   @Post('create')
   async create(@Body() req: UserCreateRequest): Promise<BaseResponse> {
     await this.userCreateUsecase.run(req);
