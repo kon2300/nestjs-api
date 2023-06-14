@@ -5,7 +5,9 @@ import {
   HttpStatus,
   Inject,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@/adaptor/primary/authentication/jwtAuthGuard';
 import { UserCreateRequest } from '@/adaptor/primary/api/user/requests/userCreateRequestDto';
@@ -17,6 +19,7 @@ import { createResponse } from '@/adaptor/primary/api/createResponse';
 import { BaseResponse } from '@/adaptor/primary/api/baseResponse';
 import { CurrentUserId } from '@/common/decorators/currentUserIdDecorator';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('/user')
 @Controller('user')
@@ -37,8 +40,12 @@ export class UserController {
     type: BaseResponse,
   })
   @Post('create')
-  async create(@Body() req: UserCreateRequest): Promise<BaseResponse> {
-    await this.userCreateUsecase.run(req);
+  @UseInterceptors(FileInterceptor('file'))
+  async create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() req: UserCreateRequest,
+  ): Promise<BaseResponse> {
+    await this.userCreateUsecase.run(req, file);
     return createResponse(HttpStatus.CREATED);
   }
 }

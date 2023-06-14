@@ -7,6 +7,7 @@ type UserDomain = Readonly<{
   email: string;
   password: string;
   salt: string;
+  filePath: string | null;
   createdAt: Date;
   updatedAt: Date;
 }>;
@@ -20,6 +21,7 @@ type SaveProperty = Readonly<{
   email: string;
   password: string;
   salt: string;
+  filePath: string | null;
   createdAt: Date;
   updatedAt: Date;
 }>;
@@ -37,6 +39,9 @@ export class User {
   /** パスワード(hash) */
   private salt: string;
 
+  /** imageのパス */
+  private filePath: string;
+
   /** 登録日 */
   private createdAt: Date;
 
@@ -50,7 +55,7 @@ export class User {
 
   /**
    * 初期化した後に値を更新する
-   * - ex. {@link duplicate}の処理を通過した後に、入力された値を詰める
+   * - 例: {@link duplicate}の処理を通過した後に、入力された値を詰める
    * */
   set reConstructor(init: Partial<UserDomain> | null) {
     Object.assign(this, init);
@@ -70,6 +75,7 @@ export class User {
       email: this.email,
       password: this.password,
       salt: this.salt,
+      filePath: this.filePath,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

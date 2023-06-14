@@ -13,6 +13,10 @@ import {
   USER_QUERY_SERVICE_PROVIDER,
 } from '@/use-case/queries/user/userQueryServiceInterface';
 import { User } from '@/domain/user/user';
+import {
+  IS3Service,
+  S3_SERVICE_PROVIDER,
+} from '@/use-case/file-storage/s3ServiceInterface';
 
 @Injectable()
 class UserCreateInteractor implements IUserCreateUseCase {
@@ -21,9 +25,14 @@ class UserCreateInteractor implements IUserCreateUseCase {
     private readonly userQueryService: IUserQueryService,
     @Inject(USER_REPOSITORY_PROVIDER)
     private readonly userRepository: IUserRepository,
+    @Inject(S3_SERVICE_PROVIDER)
+    private readonly s3Service: IS3Service,
   ) {}
 
-  async run(input: UserCreateInputDto): Promise<void> {
+  async run(
+    input: UserCreateInputDto,
+    file: Express.Multer.File,
+  ): Promise<void> {
     const findUser = await this.userQueryService.findByEmail({
       email: input.email,
     });
@@ -32,7 +41,9 @@ class UserCreateInteractor implements IUserCreateUseCase {
 
     user.duplicate();
 
-    user.reConstructor = input;
+    const uploadFileOutput = await this.s3Service.uploadFile({ file });
+
+    user.reConstructor = { filePath: uploadFileOutput.eTag, ...input };
 
     user.create();
 
