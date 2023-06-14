@@ -25,6 +25,22 @@ services:
       - db-data:/var/lib/mysql
       - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
 
+  localstack:
+    image: localstack/localstack
+    ports:
+      - ${LOCAL_STACK_PORT:-4566} # LocalStack Gateway
+    env_file:
+      - .env.dev
+    environment:
+      - SERVICES={LOCAL_STACK_SERVICES:-s3}
+      - PERSISTENCE={LOCAL_STACK_PERSISTENCE:-1}
+      - DEBUG=${LOCAL_STACK_DEBUG:-1}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - './.docker/localstack/s3.sh:/etc/localstack/init/ready.d/init-aws.sh'
+      - '${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
 volumes:
   db-data:
   hidden-data:

@@ -25,6 +25,9 @@ lerna-debug.log*
 /coverage
 /.nyc_output
 
+# localstack
+/volume
+
 # IDEs and editors
 /.idea
 .project
