@@ -23,7 +23,7 @@ describe('【e2eテスト】/user/create', () => {
   });
 
   const userCreateRequest: UserCreateRequest = {
-    email: 'test@test.com',
+    email: 'test@example.com',
     password: 'testPassword',
   };
 
