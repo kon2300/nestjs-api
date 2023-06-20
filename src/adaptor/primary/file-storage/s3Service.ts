@@ -1,5 +1,9 @@
 import {
-  s3ServiceUploadFileInputDto,
+  S3ServiceGetFileInputDto,
+  S3ServiceGetFileOutputDto,
+} from '@/use-case/file-storage/dto/s3ServiceGetFileDto';
+import {
+  S3ServiceUploadFileInputDto,
   s3ServiceUploadFileOutputDto,
 } from '@/use-case/file-storage/dto/s3ServiceUploadFileDto';
 import {
@@ -7,6 +11,7 @@ import {
   S3_SERVICE_PROVIDER,
 } from '@/use-case/file-storage/s3ServiceInterface';
 import {
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
   S3ServiceException,
@@ -39,21 +44,59 @@ class S3Service implements IS3Service {
   }
 
   async uploadFile(
-    input: s3ServiceUploadFileInputDto,
+    input: S3ServiceUploadFileInputDto,
   ): Promise<s3ServiceUploadFileOutputDto> {
-    const { originalname, buffer } = input.file;
+    if (input.file == null) return { filePath: null };
+
+    const { originalname, buffer, mimetype } = input.file;
+
+    const filePath = `${new Date().toISOString()}_${originalname}`;
 
     const command = new PutObjectCommand({
       Bucket: this.bucketName,
-      Key: originalname,
+      Key: filePath,
       Body: buffer,
+      // MEMO: 指定しないと違うタイプに設定されてしまう
+      ContentType: mimetype,
     });
 
     try {
-      const response = await this.client.send(command);
+      await this.client.send(command);
 
       return {
-        eTag: response.ETag == null ? null : response.ETag,
+        filePath,
+      };
+    } catch (e: unknown) {
+      if (e instanceof S3ServiceException) {
+        throw new HttpException(e.message, e.$response?.statusCode as number);
+      }
+
+      throw new HttpException(
+        '予期せぬエラーが発生しました',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getFile(
+    input: S3ServiceGetFileInputDto,
+  ): Promise<S3ServiceGetFileOutputDto> {
+    if (input.filePath == null) return { file: null };
+
+    const command = new GetObjectCommand({
+      Bucket: this.bucketName,
+      Key: input.filePath,
+    });
+
+    try {
+      const res = await this.client.send(command);
+
+      // MEMO: バイナリに変換する
+      const file = await res.Body?.transformToByteArray();
+
+      return {
+        // MEMO: jsonで送信できるようにバイナリをエンコードする
+        file: file ? Buffer.from(file).toString('base64') : null,
       };
     } catch (e: unknown) {
       if (e instanceof S3ServiceException) {
