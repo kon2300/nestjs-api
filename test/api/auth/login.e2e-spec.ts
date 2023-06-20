@@ -29,7 +29,7 @@ describe('【e2eテスト】/auth/login', () => {
   });
 
   const authLoginRequest: AuthLoginRequest = {
-    email: 'test@test.com',
+    email: 'test@example.com',
     password: 'testPassword',
   };
 

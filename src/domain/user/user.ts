@@ -7,8 +7,13 @@ type UserDomain = Readonly<{
   email: string;
   password: string;
   salt: string;
+  filePath: string | null;
   createdAt: Date;
   updatedAt: Date;
+}>;
+
+type FileStorageProperty = Readonly<{
+  filePath: string;
 }>;
 
 type LoginProperty = Readonly<{
@@ -20,6 +25,14 @@ type SaveProperty = Readonly<{
   email: string;
   password: string;
   salt: string;
+  filePath: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}>;
+
+type ProfileProperty = Readonly<{
+  id: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date;
 }>;
@@ -37,6 +50,9 @@ export class User {
   /** パスワード(hash) */
   private salt: string;
 
+  /** imageのパス */
+  private filePath: string;
+
   /** 登録日 */
   private createdAt: Date;
 
@@ -50,10 +66,17 @@ export class User {
 
   /**
    * 初期化した後に値を更新する
-   * - ex. {@link duplicate}の処理を通過した後に、入力された値を詰める
+   * - 例: {@link duplicate}の処理を通過した後に、入力された値を詰める
    * */
   set reConstructor(init: Partial<UserDomain> | null) {
     Object.assign(this, init);
+  }
+
+  /** fileStorage取得に必要なパスを取得する */
+  get fileStorageProperty(): FileStorageProperty {
+    return {
+      filePath: this.filePath,
+    };
   }
 
   /** ログイン処理に必要な情報を取得する */
@@ -70,6 +93,17 @@ export class User {
       email: this.email,
       password: this.password,
       salt: this.salt,
+      filePath: this.filePath,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
+  /** プロフィールに必要な値を取得する */
+  get profileProperty(): ProfileProperty {
+    return {
+      id: this.id,
+      email: this.email,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

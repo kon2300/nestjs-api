@@ -5,7 +5,7 @@ const salt = genSaltSync();
 
 export const testDataForUser = {
   id: 'testId',
-  email: 'test@test.com',
+  email: 'test@example.com',
   password: hashSync('password', salt),
   salt: salt,
   createdAt: new Date(),
@@ -13,11 +13,11 @@ export const testDataForUser = {
 };
 
 export const testDataForAuthLoginInput: AuthLoginInputDto = {
-  email: 'test@test.com',
+  email: 'test@example.com',
   password: 'password',
 };
 
 export const failedTestDataAuthLoginInput: AuthLoginInputDto = {
-  email: 'test@test.com',
+  email: 'test@example.com',
   password: 'FailingPasswords',
 };
