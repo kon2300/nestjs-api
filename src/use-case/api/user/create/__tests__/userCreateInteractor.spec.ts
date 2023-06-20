@@ -55,7 +55,7 @@ describe('userCreateInteractorのテスト', () => {
         jest.spyOn(userRepository, 'save').mockResolvedValue();
         jest
           .spyOn(s3Service, 'uploadFile')
-          .mockResolvedValue({ eTag: 'testFilePath' });
+          .mockResolvedValue({ filePath: 'testFilePath' });
 
         const output = await userCreateInteractor.run(
           testDataForUserCreateInput,

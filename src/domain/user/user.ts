@@ -12,6 +12,10 @@ type UserDomain = Readonly<{
   updatedAt: Date;
 }>;
 
+type FileStorageProperty = Readonly<{
+  filePath: string;
+}>;
+
 type LoginProperty = Readonly<{
   id: string;
 }>;
@@ -22,6 +26,13 @@ type SaveProperty = Readonly<{
   password: string;
   salt: string;
   filePath: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}>;
+
+type ProfileProperty = Readonly<{
+  id: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date;
 }>;
@@ -61,6 +72,13 @@ export class User {
     Object.assign(this, init);
   }
 
+  /** fileStorage取得に必要なパスを取得する */
+  get fileStorageProperty(): FileStorageProperty {
+    return {
+      filePath: this.filePath,
+    };
+  }
+
   /** ログイン処理に必要な情報を取得する */
   get loginProperty(): LoginProperty {
     return {
@@ -76,6 +94,16 @@ export class User {
       password: this.password,
       salt: this.salt,
       filePath: this.filePath,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
+  /** プロフィールに必要な値を取得する */
+  get profileProperty(): ProfileProperty {
+    return {
+      id: this.id,
+      email: this.email,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

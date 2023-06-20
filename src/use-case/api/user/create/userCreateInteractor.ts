@@ -43,7 +43,7 @@ class UserCreateInteractor implements IUserCreateUseCase {
 
     const uploadFileOutput = await this.s3Service.uploadFile({ file });
 
-    user.reConstructor = { filePath: uploadFileOutput.eTag, ...input };
+    user.reConstructor = { filePath: uploadFileOutput.filePath, ...input };
 
     user.create();
 
