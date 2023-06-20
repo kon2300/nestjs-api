@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, MaxLength } from 'class-validator';
 export class UserCreateRequest {
   @ApiProperty({
     description: 'メールアドレス',
-    example: 'test@test.com',
+    example: 'test@example.com',
   })
   @IsNotEmpty()
   @IsEmail()

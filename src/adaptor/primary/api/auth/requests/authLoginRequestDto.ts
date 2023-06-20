@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 export class AuthLoginRequest {
   @ApiProperty({
     description: 'メールアドレス',
-    example: 'test@test.com',
+    example: 'test@example.com',
   })
   @IsNotEmpty()
   @IsEmail()

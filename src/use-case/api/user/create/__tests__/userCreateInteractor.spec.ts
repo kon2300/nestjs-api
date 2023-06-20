@@ -16,16 +16,23 @@ import {
 import {
   testDataForUserCreateInput,
   testDataForUser,
+  testFileDataForUser,
 } from '@/use-case/api/user/create/__tests__/test-data/userCreateTestData';
+import {
+  IS3Service,
+  S3_SERVICE_PROVIDER,
+} from '@/use-case/file-storage/s3ServiceInterface';
+import { AdaptorFileStorageModule } from '@/adaptor/primary/file-storage/adaptorFileStorageModule';
 
 describe('userCreateInteractorのテスト', () => {
   let userCreateInteractor: IUserCreateUseCase;
   let userQueryService: IUserQueryService;
   let userRepository: IUserRepository;
+  let s3Service: IS3Service;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AdaptorCqrsModule],
+      imports: [AdaptorCqrsModule, AdaptorFileStorageModule],
       providers: [UserCreateUseCaseProvider],
     }).compile();
 
@@ -38,6 +45,7 @@ describe('userCreateInteractorのテスト', () => {
     userRepository = moduleFixture.get<IUserRepository>(
       USER_REPOSITORY_PROVIDER,
     );
+    s3Service = moduleFixture.get<IS3Service>(S3_SERVICE_PROVIDER);
   });
 
   describe('run', () => {
@@ -45,9 +53,13 @@ describe('userCreateInteractorのテスト', () => {
       it('同じemailのユーザーがいなければ登録できること', async () => {
         jest.spyOn(userQueryService, 'findByEmail').mockResolvedValue(null);
         jest.spyOn(userRepository, 'save').mockResolvedValue();
+        jest
+          .spyOn(s3Service, 'uploadFile')
+          .mockResolvedValue({ filePath: 'testFilePath' });
 
         const output = await userCreateInteractor.run(
           testDataForUserCreateInput,
+          testFileDataForUser,
         );
 
         expect(output).toBeUndefined();
@@ -61,7 +73,10 @@ describe('userCreateInteractorのテスト', () => {
           .mockResolvedValue(testDataForUser);
 
         expect(
-          userCreateInteractor.run(testDataForUserCreateInput),
+          userCreateInteractor.run(
+            testDataForUserCreateInput,
+            testFileDataForUser,
+          ),
         ).rejects.toThrow('すでに登録済みのユーザーです');
       });
     });
