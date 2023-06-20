@@ -4,6 +4,10 @@ import {
   FindByEmailOutputDto,
 } from '@/use-case/queries/user/dto/findByEmailDto';
 import {
+  FindByIdInputDto,
+  FindByIdOutputDto,
+} from '@/use-case/queries/user/dto/findByIdDto';
+import {
   IUserQueryService,
   USER_QUERY_SERVICE_PROVIDER,
 } from '@/use-case/queries/user/userQueryServiceInterface';
@@ -17,6 +21,16 @@ export class UserQuery implements IUserQueryService {
     const findUser = await this.prismaService.pUser.findUnique({
       where: {
         email: input.email,
+      },
+    });
+
+    return findUser;
+  }
+
+  async findById(input: FindByIdInputDto): Promise<FindByIdOutputDto> {
+    const findUser = await this.prismaService.pUser.findUnique({
+      where: {
+        id: input.userId,
       },
     });
 
