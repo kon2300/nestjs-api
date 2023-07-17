@@ -8,9 +8,9 @@ import {
   IAuthService,
 } from '@/use-case/authentication/authServiceInterface';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import {
   AuthLoginInputDto,
   AuthLoginOutputDto,
@@ -21,12 +21,12 @@ import { User } from '@/domain/user/user';
 class AuthLoginInteractor implements IAuthLoginUseCase {
   constructor(
     @Inject(AUTH_SERVICE_PROVIDER) private readonly authService: IAuthService,
-    @Inject(USER_QUERY_SERVICE_PROVIDER)
-    private readonly userQueryService: IUserQueryService,
+    @Inject(USER_QUERY_PROVIDER)
+    private readonly userQuery: IUserQuery,
   ) {}
 
   async run(input: AuthLoginInputDto): Promise<AuthLoginOutputDto> {
-    const findUser = await this.userQueryService.findByEmail({
+    const findUser = await this.userQuery.findByEmail({
       email: input.email,
     });
 

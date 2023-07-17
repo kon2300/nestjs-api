@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdaptorCqrsModule } from '@/adaptor/secondary/cqrs/adaptorCqrsModule';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import {
   testDataForUser,
   testDataForUserProfileInput,
@@ -22,7 +22,7 @@ import { UserProfileUseCaseProvider } from '@/use-case/api/user/profile/userProf
 
 describe('userProfileInteractorのテスト', () => {
   let userProfileInteractor: IUserProfileUseCase;
-  let userQueryService: IUserQueryService;
+  let userQuery: IUserQuery;
   let s3Service: IS3Service;
 
   beforeAll(async () => {
@@ -34,18 +34,14 @@ describe('userProfileInteractorのテスト', () => {
     userProfileInteractor = moduleFixture.get<IUserProfileUseCase>(
       USER_PROFILE_USE_CASE_PROVIDER,
     );
-    userQueryService = moduleFixture.get<IUserQueryService>(
-      USER_QUERY_SERVICE_PROVIDER,
-    );
+    userQuery = moduleFixture.get<IUserQuery>(USER_QUERY_PROVIDER);
     s3Service = moduleFixture.get<IS3Service>(S3_SERVICE_PROVIDER);
   });
 
   describe('run', () => {
     describe('正常系', () => {
       it('ユーザ情報が取得できること', async () => {
-        jest
-          .spyOn(userQueryService, 'findById')
-          .mockResolvedValue(testDataForUser);
+        jest.spyOn(userQuery, 'findById').mockResolvedValue(testDataForUser);
         jest
           .spyOn(s3Service, 'getFile')
           .mockResolvedValue({ file: 'testFile' });

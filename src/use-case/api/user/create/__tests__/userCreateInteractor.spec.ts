@@ -6,9 +6,9 @@ import {
   USER_CREATE_USE_CASE_PROVIDER,
 } from '@/use-case/api/user/create/userCreateUseCase';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import {
   IUserRepository,
   USER_REPOSITORY_PROVIDER,
@@ -26,7 +26,7 @@ import { AdaptorFileStorageModule } from '@/adaptor/primary/file-storage/adaptor
 
 describe('userCreateInteractorのテスト', () => {
   let userCreateInteractor: IUserCreateUseCase;
-  let userQueryService: IUserQueryService;
+  let userQuery: IUserQuery;
   let userRepository: IUserRepository;
   let s3Service: IS3Service;
 
@@ -39,9 +39,7 @@ describe('userCreateInteractorのテスト', () => {
     userCreateInteractor = moduleFixture.get<IUserCreateUseCase>(
       USER_CREATE_USE_CASE_PROVIDER,
     );
-    userQueryService = moduleFixture.get<IUserQueryService>(
-      USER_QUERY_SERVICE_PROVIDER,
-    );
+    userQuery = moduleFixture.get<IUserQuery>(USER_QUERY_PROVIDER);
     userRepository = moduleFixture.get<IUserRepository>(
       USER_REPOSITORY_PROVIDER,
     );
@@ -51,7 +49,7 @@ describe('userCreateInteractorのテスト', () => {
   describe('run', () => {
     describe('正常系', () => {
       it('同じemailのユーザーがいなければ登録できること', async () => {
-        jest.spyOn(userQueryService, 'findByEmail').mockResolvedValue(null);
+        jest.spyOn(userQuery, 'findByEmail').mockResolvedValue(null);
         jest.spyOn(userRepository, 'save').mockResolvedValue();
         jest
           .spyOn(s3Service, 'uploadFile')
@@ -68,9 +66,7 @@ describe('userCreateInteractorのテスト', () => {
 
     describe('異常系', () => {
       it('同じemailのユーザーがいた場合、登録できないこと', async () => {
-        jest
-          .spyOn(userQueryService, 'findByEmail')
-          .mockResolvedValue(testDataForUser);
+        jest.spyOn(userQuery, 'findByEmail').mockResolvedValue(testDataForUser);
 
         expect(
           userCreateInteractor.run(
