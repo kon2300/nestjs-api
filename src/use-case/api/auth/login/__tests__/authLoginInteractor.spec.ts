@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdaptorCqrsModule } from '@/adaptor/secondary/cqrs/adaptorCqrsModule';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import {
   AUTH_LOGIN_USE_CASE_PROVIDER,
   IAuthLoginUseCase,
@@ -22,7 +22,7 @@ import {
 
 describe('authLoginInteractorのテスト', () => {
   let authLoginInteractor: IAuthLoginUseCase;
-  let userQueryService: IUserQueryService;
+  let userQuery: IUserQuery;
   let authService: IAuthService;
 
   beforeAll(async () => {
@@ -34,18 +34,14 @@ describe('authLoginInteractorのテスト', () => {
     authLoginInteractor = moduleFixture.get<IAuthLoginUseCase>(
       AUTH_LOGIN_USE_CASE_PROVIDER,
     );
-    userQueryService = moduleFixture.get<IUserQueryService>(
-      USER_QUERY_SERVICE_PROVIDER,
-    );
+    userQuery = moduleFixture.get<IUserQuery>(USER_QUERY_PROVIDER);
     authService = moduleFixture.get<IAuthService>(AUTH_SERVICE_PROVIDER);
   });
 
   describe('run', () => {
     describe('正常系', () => {
       it('登録済のユーザーであればログインできること', async () => {
-        jest
-          .spyOn(userQueryService, 'findByEmail')
-          .mockResolvedValue(testDataForUser);
+        jest.spyOn(userQuery, 'findByEmail').mockResolvedValue(testDataForUser);
         jest
           .spyOn(authService, 'login')
           .mockResolvedValue({ accessToken: 'testAccessToken' });
@@ -58,7 +54,7 @@ describe('authLoginInteractorのテスト', () => {
 
     describe('異常系', () => {
       it('登録済ではないユーザーの場合ログインできないこと', async () => {
-        jest.spyOn(userQueryService, 'findByEmail').mockResolvedValue(null);
+        jest.spyOn(userQuery, 'findByEmail').mockResolvedValue(null);
 
         expect(
           authLoginInteractor.run(testDataForAuthLoginInput),
@@ -66,9 +62,7 @@ describe('authLoginInteractorのテスト', () => {
       });
 
       it('emailとパスワードが一致しない場合ログインできないこと', async () => {
-        jest
-          .spyOn(userQueryService, 'findByEmail')
-          .mockResolvedValue(testDataForUser);
+        jest.spyOn(userQuery, 'findByEmail').mockResolvedValue(testDataForUser);
 
         expect(
           authLoginInteractor.run(failedTestDataAuthLoginInput),
