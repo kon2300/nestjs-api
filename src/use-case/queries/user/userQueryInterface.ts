@@ -7,9 +7,9 @@ import {
   FindByIdOutputDto,
 } from '@/use-case/queries/user/dto/findByIdDto';
 
-export const USER_QUERY_SERVICE_PROVIDER = 'USER_QUERY_SERVICE_PROVIDER';
+export const USER_QUERY_PROVIDER = 'USER_QUERY_PROVIDER';
 
-export interface IUserQueryService {
+export interface IUserQuery {
   /** Emailからユーザーを取得する */
   findByEmail(input: FindByEmailInputDto): Promise<FindByEmailOutputDto>;
 

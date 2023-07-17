@@ -9,9 +9,9 @@ import {
   USER_REPOSITORY_PROVIDER,
 } from '@/domain/user/userRepositoryInterface';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import { User } from '@/domain/user/user';
 import {
   IS3Service,
@@ -21,8 +21,8 @@ import {
 @Injectable()
 class UserCreateInteractor implements IUserCreateUseCase {
   constructor(
-    @Inject(USER_QUERY_SERVICE_PROVIDER)
-    private readonly userQueryService: IUserQueryService,
+    @Inject(USER_QUERY_PROVIDER)
+    private readonly userQuery: IUserQuery,
     @Inject(USER_REPOSITORY_PROVIDER)
     private readonly userRepository: IUserRepository,
     @Inject(S3_SERVICE_PROVIDER)
@@ -33,7 +33,7 @@ class UserCreateInteractor implements IUserCreateUseCase {
     input: UserCreateInputDto,
     file: Express.Multer.File,
   ): Promise<void> {
-    const findUser = await this.userQueryService.findByEmail({
+    const findUser = await this.userQuery.findByEmail({
       email: input.email,
     });
 

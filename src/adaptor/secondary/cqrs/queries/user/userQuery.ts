@@ -8,13 +8,13 @@ import {
   FindByIdOutputDto,
 } from '@/use-case/queries/user/dto/findByIdDto';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import { Injectable, Provider } from '@nestjs/common';
 
 @Injectable()
-export class UserQuery implements IUserQueryService {
+export class UserQuery implements IUserQuery {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findByEmail(input: FindByEmailInputDto): Promise<FindByEmailOutputDto> {
@@ -39,6 +39,6 @@ export class UserQuery implements IUserQueryService {
 }
 
 export const UserQueryProvider: Provider = {
-  provide: USER_QUERY_SERVICE_PROVIDER,
+  provide: USER_QUERY_PROVIDER,
   useClass: UserQuery,
 };

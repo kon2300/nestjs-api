@@ -1,8 +1,8 @@
 import { Inject, Injectable, Provider } from '@nestjs/common';
 import {
-  IUserQueryService,
-  USER_QUERY_SERVICE_PROVIDER,
-} from '@/use-case/queries/user/userQueryServiceInterface';
+  IUserQuery,
+  USER_QUERY_PROVIDER,
+} from '@/use-case/queries/user/userQueryInterface';
 import { User } from '@/domain/user/user';
 import {
   IS3Service,
@@ -20,14 +20,14 @@ import {
 @Injectable()
 class UserProfileInteractor implements IUserProfileUseCase {
   constructor(
-    @Inject(USER_QUERY_SERVICE_PROVIDER)
-    private readonly userQueryService: IUserQueryService,
+    @Inject(USER_QUERY_PROVIDER)
+    private readonly userQuery: IUserQuery,
     @Inject(S3_SERVICE_PROVIDER)
     private readonly s3Service: IS3Service,
   ) {}
 
   async run(input: UserProfileInputDto): Promise<UserProfileOutputDto> {
-    const findUser = await this.userQueryService.findById({
+    const findUser = await this.userQuery.findById({
       userId: input.userId,
     });
 
